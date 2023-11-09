@@ -3,6 +3,8 @@ const rowInput = document.getElementById("row-input");
 const columnInput = document.getElementById("column-input");
 const toggleGrid = document.getElementById("toggle-grid");
 const roomNameInput = document.getElementById("room-name-input");
+const savedRooms = document.getElementById("saved-rooms");
+
 
 let rooms;
 window.onload = () => {
@@ -13,9 +15,8 @@ window.onload = () => {
     }
     rooms = JSON.parse(rooms);
     if (rooms.length > 0) {
+        rooms.forEach(room => addSavedRoom(room))
     }
-
-    console.log(rooms);
 }
 
 
@@ -167,7 +168,24 @@ const saveGrid = () => {
     }
 
     rooms.push(room);
+    addSavedRoom(room);
     localStorage.setItem("rooms", JSON.stringify(rooms));
+}
+
+
+const addSavedRoom = room => {
+    const roomSave = document.createElement("li");
+    roomSave.classList.add("saved-room")
+    const arrowIcon = document.createElement("img");
+    const roomName = document.createElement("p");
+
+    arrowIcon.src = "images/right-arrow.svg"
+        
+    roomName.textContent = room.name;
+
+    roomSave.appendChild(roomName);
+    roomSave.appendChild(arrowIcon);
+    savedRooms.appendChild(roomSave);
 }
 
 

@@ -155,6 +155,37 @@ h1 {
 
 
 /*
+  Saved Rooms
+*/
+
+.saved-room {
+  margin: 1rem;
+  width: 10rem;
+  height: 2.5rem;
+  padding: 1rem;
+  background-color: white;
+  list-style: none;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+.saved-room > img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.saved-room:hover {
+  cursor: pointer;
+}
+
+
+
+/*
 Toggle switch styles
 */ 
 .switch {
