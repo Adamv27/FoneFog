@@ -10,16 +10,25 @@ grid.state = {
 
     numRows: 10,
     numColumns: 10,
+    
+    currentName: "Floor 1",
 
     redraw: () => {
         drawGrid(grid.state.numRows, grid.state.numColumns);
     },
 
-    getArray: () => {
-        gridArray = Array(grid.state.numRows)
-            .fill().map(() => Array(grid.state.numColumns).fill(0));
+    toString: () => {
+        //gridArray = Array(grid.state.numRows)
+        //  .fill().map(() => Array(grid.state.numColumns).fill(0));
+        let gridString = "";
+        grid.childNodes.forEach((child, index) => {
+           if (index != 0 && index % grid.state.numColumns == 0) {
+                gridString += "\n";
+           }
+            gridString += child.classList.contains("wall") ? 0 : 1;
+        })
 
-        return gridArray;
+        return gridString;
     }
 }
 
@@ -109,6 +118,27 @@ const toggleGridBox = (e) => {
         e.target.classList.add("wall");
     }
 }
+
+
+const downloadGrid = () => {
+    const gridString = grid.state.toString();
+    const fileName = `${grid.state.currentName}.txt`
+
+    const file = new File([gridString], fileName, {
+        type: 'text/plain',
+    });
+
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    link.href = url;
+    link.download = file.name;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+}
+
 
 grid.addEventListener("click", (e) => {
     e.target.classList.toggle("wall");
