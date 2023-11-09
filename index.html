@@ -10,23 +10,24 @@
   <body>
     <main>
       <h1>Fone Fog Map Maker</h1>
-      <label for="row-input">Rows</label>
-      <input id="row-input" type="number" value="10"/>
-      <label for="column-input">Columns</label>
-      <input id="column-input" type="number" value="10"/>
-      
-      <div class="input-container">
-        <label for="toggle-grid">Toggle Grid</label>
-        <label class="switch">
-          <input id="toggle-grid" type="checkbox" checked>
-          <span class="slider round"></span>
+      <div>
+        <label for="row-input">Rows
+          <input id="row-input" type="number" value="10"/>
         </label>
-      </div>
+        <label for="column-input">Columns
+          <input id="column-input" type="number" value="10"/>
+        </label>
 
-      <div id="grid-container">
-        <div id="grid">
-
+        <div class="input-container">
+          <label for="toggle-grid">Toggle Grid</label>
+          <label class="switch">
+            <input id="toggle-grid" type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
         </div>
+      </div>
+      <div id="grid-container">
+        <div id="grid"></div>
       </div>
 
       <label for="room-name-input">Save as</label>

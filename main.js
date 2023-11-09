@@ -31,7 +31,6 @@ const createGridBox = () => {
     let gridBoxWidth = grid.state.width / grid.state.numColumns;
     gridBox.style.width = `${gridBoxWidth}rem`;
 
-
     return gridBox;
 }
 
@@ -70,11 +69,7 @@ const drawGrid = (rows, columns) => {
 
 const toggleGridLines = () => {
     grid.childNodes.forEach(child => {
-        if (child.classList.contains("bordered")) {
-            child.classList.remove("bordered");
-        } else {
-            child.classList.add("bordered");
-        }
+        child.classList.toggle("bordered");
     })
 }
 
@@ -92,6 +87,26 @@ columnInput.addEventListener("change", () => {
 toggleGrid.addEventListener("change", () => {
     toggleGridLines();     
 })
+
+
+const toggleGridBox = (e) => {
+    if (!e.target.classList.contains("wall")) {
+        e.target.classList.add("wall");
+    }
+}
+
+grid.addEventListener("click", (e) => {
+    e.target.classList.toggle("wall");
+})
+
+grid.addEventListener("mousedown", () => {
+    grid.addEventListener("mouseover", toggleGridBox)
+})
+
+window.addEventListener("mouseup", () => {
+    grid.removeEventListener("mouseover", toggleGridBox)
+})
+
 
 drawGrid(10, 10)
 
