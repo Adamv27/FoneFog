@@ -7,14 +7,13 @@
 
 body {
   background-color: #eee;
+  font-family: Poppins;
+  color: var(--purple);
 }
 
 main {
-  font-family: Poppins;
   font-weight: 600;
-  color: var(--purple);
   font-size: large;
-
     
   display: flex;
   flex-direction: column;
@@ -199,4 +198,20 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer > a {
+  margin-left: 1rem;
+}
+
+#github-image {
+  width: 2rem;
+  height: 2rem;
 }
