@@ -2,6 +2,21 @@ const grid = document.getElementById("grid");
 const rowInput = document.getElementById("row-input");
 const columnInput = document.getElementById("column-input");
 const toggleGrid = document.getElementById("toggle-grid");
+const roomNameInput = document.getElementById("room-name-input");
+
+let rooms;
+window.onload = () => {
+    rooms = localStorage.getItem("rooms");
+    if (rooms === null) {
+        rooms = []
+        localStorage.setItem("rooms", JSON.stringify(rooms));
+    }
+    rooms = JSON.parse(rooms);
+    if (rooms.length > 0) {
+    }
+
+    console.log(rooms);
+}
 
 
 grid.state = {
@@ -11,34 +26,38 @@ grid.state = {
     numRows: 10,
     numColumns: 10,
     
-    currentName: "Floor 1",
+    currentName: "Room 1",
 
     redraw: () => {
         drawGrid(grid.state.numRows, grid.state.numColumns);
     },
 
     toString: () => {
-        //gridArray = Array(grid.state.numRows)
-        //  .fill().map(() => Array(grid.state.numColumns).fill(0));
         let gridString = "";
         grid.childNodes.forEach((child, index) => {
-           if (index != 0 && index % grid.state.numColumns == 0) {
+            if (index != 0 && index % grid.state.numColumns == 0) {
                 gridString += "\n";
-           }
+            }
             gridString += child.classList.contains("wall") ? 0 : 1;
         })
-
         return gridString;
     }
 }
 
 
+/*
+    Remove all child elements (grid boxes) of the grid. 
+*/
 const clearGrid = () => {
     while (grid.firstChild) {
         grid.removeChild(grid.lastChild);
     }
 }
 
+
+/*
+    Set all boxes in the grid back to the default (grey) state.
+*/
 const resetGrid = () => {
     grid.childNodes.forEach(child => {
         if (child.classList.contains("wall")) {
@@ -82,11 +101,9 @@ const resizeGrid = (rows, columns) => {
 const drawGrid = (rows, columns) => {
     clearGrid();
     resizeGrid(rows, columns);
-
     for (let row = 0; row < rows; row++) {
         for (let column = 0; column < columns; column++) {
-            box = createGridBox();
-            grid.appendChild(box);
+            grid.appendChild(createGridBox());
         }
     }
 }
@@ -140,6 +157,20 @@ const downloadGrid = () => {
 }
 
 
+const saveGrid = () => {
+    const gridString = grid.state.toString();
+    const roomName = grid.state.currentName;
+    
+    const room = {
+        name: roomName,
+        gridString: gridString
+    }
+
+    rooms.push(room);
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+}
+
+
 grid.addEventListener("click", (e) => {
     e.target.classList.toggle("wall");
 })
@@ -152,7 +183,15 @@ window.addEventListener("mouseup", () => {
     grid.removeEventListener("mouseover", toggleGridBox)
 })
 
+roomNameInput.addEventListener("change", () => {
+    grid.state.currentName = roomNameInput.value;
+})
+
 
 drawGrid(10, 10)
+
+
+
+
 
 

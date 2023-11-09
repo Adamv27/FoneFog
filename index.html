@@ -15,11 +15,11 @@
 
         <div id="size-input-container">
           <label for="row-input">Rows
-            <input id="row-input" class="size-input" type="number" value="10"/>
+            <input id="row-input" class="input size" type="number" value="10"/>
           </label>
         
           <label for="column-input">Columns
-            <input id="column-input" class="size-input" type="number" value="10"/>
+            <input id="column-input" class="input size" type="number" value="10"/>
           </label>
         </div> 
         
@@ -42,10 +42,12 @@
       <div id="grid-container">
         <div id="grid"></div>
       </div>
-
-      <label for="room-name-input">Save as</label>
-      <input type="text" id="room-name-input" value="Family Room"/>
-      <button>Save</button>
+      
+      <div>
+        <label for="room-name-input">Save as</label>
+        <input type="text" id="room-name-input" class="input room-name" value="Room 1"/>
+        <button class="settings-button save" onclick="saveGrid()">Save</button>
+      </div>
 
     </main>
     <footer>

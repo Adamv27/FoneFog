@@ -47,18 +47,27 @@ h1 {
   align-items: end;
 }
 
-.size-input {
+
+.input {
+  height: 2rem;
   margin-top: 0.25rem;
   margin-left: 0.25rem;
-  background-color: #eee;
-  width: 2rem;
-  height: 2rem;
   border: 1px solid #eee;
   border-radius: 8px;
-  text-align: center;
 }
 
-.size-input:focus{
+.input.size {
+  width: 2rem;
+  background-color: #eee;
+}
+
+.input.room-name {
+  width: 7rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+.input:focus{
   border-bottom: 2px solid var(--purple);
   outline: none;
 }
@@ -69,7 +78,6 @@ h1 {
   align-items: center;
 }
 
-
 .settings-button {
   color: white;
   background-color: var(--purple);
@@ -78,6 +86,12 @@ h1 {
 
   width: 3rem;
   height: 3rem;
+}
+
+.settings-button.save {
+  height: 2.25rem;
+  width: 3rem;
+  border-radius: 8px;
 }
 
 .settings-button:hover {
@@ -96,11 +110,11 @@ h1 {
   background-color: #b52a2a;
 }
 
-.settings-button.download:hover {
+.settings-button:hover {
   filter: brightness(85%);
 }
 
-.settings-button.download:active {
+.settings-button:active {
   filter: brightness(65%);
 }
 
