@@ -85,10 +85,10 @@ h1 {
   cursor: pointer;
 }
 
-
-.settings-button.download > img {
+.settings-button > img {
   width: 65%;
 }
+
 
 .settings-button.clear:hover {
   background-color: red;
