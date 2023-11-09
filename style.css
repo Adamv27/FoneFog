@@ -89,7 +89,6 @@ h1 {
   width: 65%;
 }
 
-
 .settings-button.clear:hover {
   background-color: red;
 }
@@ -98,6 +97,13 @@ h1 {
   background-color: #b52a2a;
 }
 
+.settings-button.download:hover {
+  filter: brightness(85%);
+}
+
+.settings-button.download:active {
+  filter: brightness(65%);
+}
 
 
 /*
