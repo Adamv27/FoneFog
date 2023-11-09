@@ -13,6 +13,13 @@ grid.state = {
 
     redraw: () => {
         drawGrid(grid.state.numRows, grid.state.numColumns);
+    },
+
+    getArray: () => {
+        gridArray = Array(grid.state.numRows)
+            .fill().map(() => Array(grid.state.numColumns).fill(0));
+
+        return gridArray;
     }
 }
 
@@ -21,6 +28,14 @@ const clearGrid = () => {
     while (grid.firstChild) {
         grid.removeChild(grid.lastChild);
     }
+}
+
+const resetGrid = () => {
+    grid.childNodes.forEach(child => {
+        if (child.classList.contains("wall")) {
+            child.classList.remove("wall")
+        }
+    })
 }
 
 
