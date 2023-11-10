@@ -26,8 +26,8 @@ grid.state = {
     width: 30,
     height: 30,
 
-    numRows: 10,
-    numColumns: 10,
+    numRows: 20,
+    numColumns: 40,
     
     currentName: "Room 1",
 
@@ -235,7 +235,7 @@ roomNameInput.addEventListener("change", () => {
 })
 
 
-drawGrid(10, 10)
+drawGrid(20, 40)
 
 
 
