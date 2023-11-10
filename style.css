@@ -174,15 +174,27 @@ h1 {
 }
 
 
-.saved-room > img {
+.saved-room > .arrow {
   width: 2rem;
   height: 2rem;
+}
+
+.saved-room > .delete {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.saved-room > .delete:hover {
+  filter: brightness(75%)
+}
+
+.saved-room > .delete:active {
+  filter: brightness(50%)
 }
 
 .saved-room:hover {
   cursor: pointer;
 }
-
 
 
 /*

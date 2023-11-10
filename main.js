@@ -4,6 +4,7 @@ const columnInput = document.getElementById("column-input");
 const toggleGrid = document.getElementById("toggle-grid");
 const roomNameInput = document.getElementById("room-name-input");
 const savedRooms = document.getElementById("saved-rooms");
+const saveTemplate = document.getElementById("saved-room-template");
 
 
 let rooms;
@@ -13,6 +14,7 @@ window.onload = () => {
         rooms = []
         localStorage.setItem("rooms", JSON.stringify(rooms));
     }
+
     rooms = JSON.parse(rooms);
     if (rooms.length > 0) {
         rooms.forEach(room => addSavedRoom(room))
@@ -47,14 +49,13 @@ grid.state = {
 
 
 /*
-    Remove all child elements (grid boxes) of the grid. 
+    Remove all child elements parent 
 */
-const clearGrid = () => {
-    while (grid.firstChild) {
-        grid.removeChild(grid.lastChild);
+const removeChildren = parent => {
+    while (parent.firstChild) {
+        parent.removeChild(parent.lastChild);
     }
 }
-
 
 /*
     Set all boxes in the grid back to the default (grey) state.
@@ -100,7 +101,7 @@ const resizeGrid = (rows, columns) => {
 
 
 const drawGrid = (rows, columns) => {
-    clearGrid();
+    removeChildren(grid);
     resizeGrid(rows, columns);
     for (let row = 0; row < rows; row++) {
         for (let column = 0; column < columns; column++) {
@@ -113,6 +114,12 @@ const toggleGridLines = () => {
     grid.childNodes.forEach(child => {
         child.classList.toggle("bordered");
     })
+}
+
+const toggleGridBox = (e) => {
+    if (!e.target.classList.contains("wall")) {
+        e.target.classList.add("wall");
+    }
 }
 
 
@@ -129,13 +136,6 @@ columnInput.addEventListener("change", () => {
 toggleGrid.addEventListener("change", () => {
     toggleGridLines();     
 })
-
-
-const toggleGridBox = (e) => {
-    if (!e.target.classList.contains("wall")) {
-        e.target.classList.add("wall");
-    }
-}
 
 
 const downloadGrid = () => {
@@ -158,34 +158,61 @@ const downloadGrid = () => {
 }
 
 
-const saveGrid = () => {
-    const gridString = grid.state.toString();
-    const roomName = grid.state.currentName;
+const saveRooms = roomsList => {
+    localStorage.setItem("rooms", JSON.stringify(roomsList))
     
+    // Rerender saved room list on update
+    removeChildren(savedRooms);
+    roomsList.forEach(room => addSavedRoom(room));
+}
+
+
+const saveGrid = () => {
     const room = {
-        name: roomName,
-        gridString: gridString
+        name: grid.state.currentName,
+        numRows: grid.state.numRows,
+        numColumns: grid.state.numColumns,
+        gridString: grid.state.toString() 
+    }
+    rooms.push(room);
+    saveRooms(rooms);
+}
+
+
+const loadSavedRoom = (e, room) => {
+    if (e.target.classList?.contains("delete"))
+        return
+
+    grid.state.numRows = room.numRows;
+    grid.state.numColumns = room.numColumns;
+    grid.state.redraw();
+    
+    const gridString = room.gridString.replace(/[\r\n]/gm, '');
+    const gridBoxes = grid.childNodes
+    for (let i = 0; i < gridString.length; i++) {
+        if (gridString.charAt(i) === "0") {
+            let box = gridBoxes[i]
+            box.classList.add("wall")
+        }      
     }
 
-    rooms.push(room);
-    addSavedRoom(room);
-    localStorage.setItem("rooms", JSON.stringify(rooms));
 }
 
 
 const addSavedRoom = room => {
-    const roomSave = document.createElement("li");
-    roomSave.classList.add("saved-room")
-    const arrowIcon = document.createElement("img");
-    const roomName = document.createElement("p");
-
-    arrowIcon.src = "images/right-arrow.svg"
-        
-    roomName.textContent = room.name;
-
-    roomSave.appendChild(roomName);
-    roomSave.appendChild(arrowIcon);
+    const roomSave = saveTemplate.cloneNode(true);
+    roomSave.style.display = "flex"
+    roomSave.querySelector("p").textContent = room.name;
+    roomSave.addEventListener("click", (e) => loadSavedRoom(e, room))
     savedRooms.appendChild(roomSave);
+}
+
+
+const deleteSavedRoom = icon => {
+    const savedRoom =  icon.parentElement;
+    const roomName = savedRoom.querySelector("p").textContent;
+    rooms = rooms.filter(room => room.name != roomName);
+    saveRooms(rooms);
 }
 
 
