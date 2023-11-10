@@ -1,4 +1,4 @@
-# FoneFog
+# Fone Fog Map Maker
 Map Making website for JMU's CS159 PA3 "Fone Fog"
 
 ## Live Website
