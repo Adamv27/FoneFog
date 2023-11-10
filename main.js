@@ -182,7 +182,9 @@ const saveGrid = () => {
 const loadSavedRoom = (e, room) => {
     if (e.target.classList?.contains("delete"))
         return
-
+     
+    roomNameInput.value = room.name
+    grid.state.currentName = room.name
     grid.state.numRows = room.numRows;
     grid.state.numColumns = room.numColumns;
     grid.state.redraw();
